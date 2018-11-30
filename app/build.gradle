@@ -1,0 +1,48 @@
+apply plugin: 'com.android.application'
+
+android {
+
+    compileSdkVersion rootProject.ext.CompileSdk
+    buildToolsVersion '28.0.3'
+
+    android.applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def appName = parent.name
+            def fileName = appName.replace(" ", "_")
+            outputFileName = "$fileName-v${variant.versionName}.apk"
+        }
+    }
+
+    defaultConfig {
+        applicationId "com.segilmez.iconpack"
+        minSdkVersion rootProject.ext.MinSdk
+        targetSdkVersion rootProject.ext.TargetSdk
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    /*
+     * CandyBar Material Dashboard Library
+     *
+     * How to update?
+     * 1. See latest version at GitHub, https://github.com/danimahardhika/candybar-library/releases
+     * 2. Change candybar dependency matching latest version
+     * 3. com.github.danimahardhika.candybar-library:core:$versionNumber
+     * 4. Sync Project with Gradle Files
+     * 5. Clean project
+     * 6. Done
+     */
+    implementation 'com.github.danimahardhika.candybar-library:core:3.5.0-b4'
+}
